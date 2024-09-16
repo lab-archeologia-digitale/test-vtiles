@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href='https://unpkg.com/maplibre-gl@4.6.0/dist/maplibre-gl.css' rel='stylesheet' />
+  <script src='https://unpkg.com/maplibre-gl@4.6.0/dist/maplibre-gl.js'></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <title>Hello, world!</title>
+</head>
+
+<body class="h-100">
+  <div id="map" class="h-100"></div>
+
+
+
+  <script>
+
+    const lyr = "gek_detail";
+    // const lyr = "ALB_adm0";
+
+    var map = new maplibregl.Map({
+      container: 'map',
+      center: [37.0003, 37.3876],
+      zoom: 10,
+      bearing: 0,
+      style: "./ksa.json",
+    });
+
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.addControl(new maplibregl.ScaleControl(), 'top-left');
+
+    map.on('click', 'ksa', function (e) {
+      const coordinates = e.lngLat;
+      const description = `<pre>${JSON.stringify(e.features[0].properties, null, 2)}</pre>`;
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new maplibregl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    });
+  </script>
+</body>
+
+</html>
