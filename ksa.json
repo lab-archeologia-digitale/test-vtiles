@@ -31,7 +31,7 @@
       "source-layer": "scms_ksa",
       "type": "circle",
       "paint": {
-        "circle-color": "#ee8822",
+        "circle-color": "#ff0000",
         "circle-opacity": 0.5,
         "circle-radius": 5,
         "circle-stroke-width": 1.5,
